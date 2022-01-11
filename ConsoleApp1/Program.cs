@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using System.Security.Cryptography;
 using System.Text;
 
+ExpressEncription.AESEncription.AES_Encrypt("TestData","hui");
 
 Aes aes = Aes.Create();
 //aes.KeySize = 128;
@@ -10,6 +11,7 @@ Aes aes = Aes.Create();
 string pass = "4elpsGky8'}|;I[*";
 byte[] key = Encoding.ASCII.GetBytes(pass);
 
+string base64 = "Jp+tX7I2w+LInNJzGabcQO6SEYrqZTKL9FrA2FF9D5Y=";
 
 foreach (var item in key)
 {
@@ -63,6 +65,8 @@ void Encrypt()
     }
     Console.WriteLine("\n\n");
 
+    //var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+    Console.WriteLine(Convert.ToBase64String(data));
 
     //using (var connection = new SqliteConnection("Data Source=data.db"))
     //{
@@ -81,10 +85,10 @@ void Encrypt()
 }
 
 
-async void Decrypt()
+void Decrypt()
 {
-    //File.WriteAllText("TestData2.txt", String.Empty);
-    //string dataCrypt = "";
+    File.WriteAllText("TestData2.txt", String.Empty);
+    //string dataCrypt = null;
     //string sqlExpression = "SELECT info FROM main where id = 25";
     //using (var connection = new SqliteConnection("Data Source=data.db"))
     //{
@@ -103,18 +107,21 @@ async void Decrypt()
     //    }
     //}
 
-    //var base64EncodedBytes = Convert.FromBase64String(dataCrypt);
+    byte[] base64EncodedBytes = Convert.FromBase64String(base64);
     //Console.WriteLine(Encoding.UTF8.GetString(base64EncodedBytes));
     //Console.WriteLine(base64EncodedBytes);
 
+    //это плохой вариант
     //using (StreamWriter sw = new StreamWriter(@"TestData2.txt", false, System.Text.Encoding.Default))
     //{
     //    sw.Write(Encoding.UTF8.GetString(base64EncodedBytes));
     //}
+    File.WriteAllBytes("TestData2.txt", base64EncodedBytes);
 
-
-    using (FileStream fileStream = new("TestData2.txt", FileMode.Open))
+    try
     {
+        using (FileStream fileStream = new("TestData2.txt", FileMode.Open))
+        {
             byte[] iv = new byte[aes.IV.Length];
             int numBytesToRead = aes.IV.Length;
             int numBytesRead = 0;
@@ -134,11 +141,15 @@ async void Decrypt()
             {
                 using (StreamReader decryptReader = new(cryptoStream))
                 {
-                    string decryptedMessage = await decryptReader.ReadToEndAsync();
+                    string decryptedMessage = decryptReader.ReadToEnd();
                     Console.WriteLine($"The decrypted original message:\n{decryptedMessage}");
                 }
             }
-        
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.Write("\n"+ex.Message);
     }
 }
 
