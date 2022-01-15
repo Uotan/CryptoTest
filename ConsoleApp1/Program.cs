@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using System.Security.Cryptography;
 using System.Text;
 
-ExpressEncription.AESEncription.AES_Encrypt("TestData","hui");
+//ExpressEncription.AESEncription.AES_Encrypt("TestData","hui");
 
 Aes aes = Aes.Create();
 //aes.KeySize = 128;
@@ -21,7 +21,7 @@ Console.WriteLine();
 Console.WriteLine(Encoding.UTF8.GetString(key));
 aes.Key = key;
 
-//Encrypt();
+Encrypt();
 
 //сначала расшифруй
 Decrypt();
