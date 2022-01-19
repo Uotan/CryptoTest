@@ -8,7 +8,7 @@ RsaEncryption rsa = new RsaEncryption();
 
 Console.WriteLine("public key: "+rsa.GetPublicKey());
 Console.WriteLine();
-Console.WriteLine("private key: " + rsa.GetPrivateKey());
+Console.WriteLine("private key:" + rsa.GetPrivateKey());
 Console.WriteLine();
 string cypher = string.Empty;
 Console.WriteLine("текст для шифровки:");

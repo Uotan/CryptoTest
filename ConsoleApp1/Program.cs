@@ -5,6 +5,18 @@ using System.Text;
 
 //ExpressEncription.AESEncription.AES_Encrypt("TestData","hui");
 
+CreateTestFiles();
+
+void CreateTestFiles()
+{
+    if (!File.Exists("TestData.txt") || !File.Exists("TestData2.txt"))
+    {
+        File.Create("TestData.txt");
+        File.Create("TestData2.txt");
+    }
+}
+
+
 Aes aes = Aes.Create();
 //aes.KeySize = 128;
 //aes.BlockSize = 128;
@@ -21,10 +33,37 @@ Console.WriteLine();
 Console.WriteLine(Encoding.UTF8.GetString(key));
 aes.Key = key;
 
+
+
+
 Encrypt();
 
 //сначала расшифруй
 Decrypt();
+
+
+
+
+//Console.WriteLine(ComputeSha256Hash("testing hash"));
+
+string ComputeSha256Hash(string rawData)
+{
+    // Create a SHA256   
+    using (SHA256 sha256Hash = SHA256.Create())
+    {
+        // ComputeHash - returns byte array  
+        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+        // Convert byte array to a string   
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            builder.Append(bytes[i].ToString("x2"));
+        }
+        return builder.ToString();
+    }
+}  
+                   
 
 
 Console.ReadKey();
@@ -32,6 +71,7 @@ Console.ReadKey();
 void Encrypt()
 {
     File.WriteAllText("TestData.txt", String.Empty);
+    //если файл не существовал он будет создан, но программа первый раз выдаст ошибку
     using (FileStream fileStream = new("TestData.txt", FileMode.OpenOrCreate))
     {
             
