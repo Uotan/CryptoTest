@@ -3,7 +3,6 @@ using Microsoft.Data.Sqlite;
 using System.Security.Cryptography;
 using System.Text;
 
-//ExpressEncription.AESEncription.AES_Encrypt("TestData","hui");
 
 CreateTestFiles();
 
