@@ -3,8 +3,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
+if (!File.Exists("public.xml")|| !File.Exists("private.xml"))
+{
+    File.Create("public.xml");
+    File.Create("private.xml");
+}
 
-RsaEncryption rsa = new RsaEncryption();
+
+
+
+RsaEncryptionClass rsa = new RsaEncryptionClass();
 
 Console.WriteLine("public key: "+rsa.GetPublicKey());
 Console.WriteLine();
@@ -24,14 +32,14 @@ Console.WriteLine("Decrypted text:\n" + plainText);
 
 Console.ReadKey();
 
-class RsaEncryption
+class RsaEncryptionClass
 {
     RSACryptoServiceProvider csp = new RSACryptoServiceProvider();
     RSAParameters _privatekey;
     RSAParameters _publickey;
 
 
-    public RsaEncryption()
+    public RsaEncryptionClass()
     {
         _privatekey = csp.ExportParameters(true);
         _publickey = csp.ExportParameters(false);
@@ -42,7 +50,14 @@ class RsaEncryption
         var sw = new StringWriter();
         XmlSerializer xs = new XmlSerializer(typeof(RSAParameters));    
         xs.Serialize(sw, _publickey);
+        if (File.Exists("public.xml"))
+        {
+            File.WriteAllText("public.xml", String.Empty);
+            byte[] key = Encoding.ASCII.GetBytes(sw.ToString());
+            File.WriteAllBytes("public.xml", key);
+        }
         return sw.ToString();
+
     }
 
     public string GetPrivateKey()
@@ -50,6 +65,12 @@ class RsaEncryption
         var sw = new StringWriter();
         XmlSerializer xs = new XmlSerializer(typeof(RSAParameters));
         xs.Serialize(sw, _privatekey);
+        if (File.Exists("public.xml"))
+        {
+            File.WriteAllText("private.xml", String.Empty);
+            byte[] key = Encoding.ASCII.GetBytes(sw.ToString());
+            File.WriteAllBytes("private.xml", key);
+        }
         return sw.ToString();
     }
 

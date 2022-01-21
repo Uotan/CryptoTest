@@ -4,21 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 
 
-CreateTestFiles();
-
-void CreateTestFiles()
-{
-    if (!File.Exists("TestData.txt") || !File.Exists("TestData2.txt"))
-    {
-        File.Create("TestData.txt");
-        File.Create("TestData2.txt");
-    }
-}
-
-
 Aes aes = Aes.Create();
-//aes.KeySize = 128;
-//aes.BlockSize = 128;
 string pass = "4elpsGky8'}|;I[*";
 byte[] key = Encoding.ASCII.GetBytes(pass);
 
@@ -69,7 +55,10 @@ Console.ReadKey();
 
 void Encrypt()
 {
-    File.WriteAllText("TestData.txt", String.Empty);
+    if (File.Exists("TestData.txt"))
+    {
+        File.WriteAllText("TestData.txt", String.Empty);
+    }
     //если файл не существовал он будет создан, но программа первый раз выдаст ошибку
     using (FileStream fileStream = new("TestData.txt", FileMode.OpenOrCreate))
     {
@@ -126,7 +115,11 @@ void Encrypt()
 
 void Decrypt()
 {
-    File.WriteAllText("TestData2.txt", String.Empty);
+    if (File.Exists("TestData2.txt"))
+    {
+        File.WriteAllText("TestData2.txt", String.Empty);
+    }
+   
     //string dataCrypt = null;
     //string sqlExpression = "SELECT info FROM main where id = 25";
     //using (var connection = new SqliteConnection("Data Source=data.db"))
