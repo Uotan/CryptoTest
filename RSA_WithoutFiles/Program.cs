@@ -3,32 +3,24 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
-if (!File.Exists("public.xml")|| !File.Exists("private.xml"))
-{
-    File.Create("public.xml");
-    File.Create("private.xml");
-}
-
-
 
 
 RsaEncryptionClass rsa = new RsaEncryptionClass();
-
-
-//пока не уверен в правильности использования
-//rsa.SetKeySize();
-
-Console.WriteLine("public key: "+rsa.GetPublicKey());
+rsa.RSAexportKeys();
+byte[] publicKeyBytes = rsa.GetPublicKey();
+Console.WriteLine("public key: " + Encoding.UTF8.GetString(publicKeyBytes));//отправим на сервер
 Console.WriteLine();
-Console.WriteLine("private key:" + rsa.GetPrivateKey());
+byte[] privateKeyBytes = rsa.GetPrivateKey();
+Console.WriteLine("private key:" + Encoding.UTF8.GetString(privateKeyBytes));//сохраняем в настройки приложения (локально)
 Console.WriteLine();
+
 string cypher = string.Empty;
 Console.WriteLine("текст для шифровки:");
 var text = Console.ReadLine();
 if (!string.IsNullOrEmpty(text))
 {
     cypher = rsa.Encrypt(text);
-    Console.WriteLine($"Encrypted text:\n"+cypher);
+    Console.WriteLine($"Encrypted text:\n" + cypher);
 }
 Console.WriteLine();
 var plainText = rsa.Decrypt(cypher);
@@ -38,56 +30,46 @@ Console.ReadKey();
 
 class RsaEncryptionClass
 {
+    RSACryptoServiceProvider cspNew;
     RSACryptoServiceProvider csp = new RSACryptoServiceProvider();
     RSAParameters _privatekey;
     RSAParameters _publickey;
 
-
-    public RsaEncryptionClass()
+   
+    public void RSAexportKeys()
     {
         _privatekey = csp.ExportParameters(true);
         _publickey = csp.ExportParameters(false);
-        
     }
 
-    public void SetKeySize()
-    {
-        csp.KeySize = 16384;
-    }
+    //public void SetKeySize()
+    //{
+    //    csp.KeySize = 16384;
+    //}
 
-    public string GetPublicKey()
+    public byte[] GetPublicKey()
     {
         var sw = new StringWriter();
-        XmlSerializer xs = new XmlSerializer(typeof(RSAParameters));    
+        XmlSerializer xs = new XmlSerializer(typeof(RSAParameters));
         xs.Serialize(sw, _publickey);
-        if (File.Exists("public.xml"))
-        {
-            File.WriteAllText("public.xml", String.Empty);
-            byte[] key = Encoding.ASCII.GetBytes(sw.ToString());
-            File.WriteAllBytes("public.xml", key);
-        }
-        return sw.ToString();
+        byte[] key = Encoding.ASCII.GetBytes(sw.ToString());
+        return key;
 
     }
 
-    public string GetPrivateKey()
+    public byte[] GetPrivateKey()
     {
         var sw = new StringWriter();
         XmlSerializer xs = new XmlSerializer(typeof(RSAParameters));
         xs.Serialize(sw, _privatekey);
-        if (File.Exists("public.xml"))
-        {
-            File.WriteAllText("private.xml", String.Empty);
-            byte[] key = Encoding.ASCII.GetBytes(sw.ToString());
-            File.WriteAllBytes("private.xml", key);
-        }
-        return sw.ToString();
+        byte[] key = Encoding.ASCII.GetBytes(sw.ToString());
+        return key;
     }
 
     public string Encrypt(string plainText)
     {
-        csp = new RSACryptoServiceProvider();
-        csp.ImportParameters(_publickey);
+        cspNew = new RSACryptoServiceProvider();
+        cspNew.ImportParameters(_publickey);
         var data = Encoding.Unicode.GetBytes(plainText);
         var cypher = csp.Encrypt(data, false);
         return Convert.ToBase64String(cypher);
@@ -96,7 +78,7 @@ class RsaEncryptionClass
     public string Decrypt(string cypherText)
     {
         var dataBytes = Convert.FromBase64String(cypherText);
-        csp.ImportParameters(_privatekey);
+        cspNew.ImportParameters(_privatekey);
         var plainText = csp.Decrypt(dataBytes, false);
         return Encoding.Unicode.GetString(plainText);
     }
