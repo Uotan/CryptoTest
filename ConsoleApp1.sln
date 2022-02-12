@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Asymmetrical", "Asymmetrica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "twileloopLibraryTest", "twileloopLibraryTest\twileloopLibraryTest.csproj", "{709675B5-A281-497C-9B1E-F823E18AC497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSA_WithoutFiles", "RSA_WithoutFiles\RSA_WithoutFiles.csproj", "{83E087AB-EFB1-4696-B8B7-F37C44A8368B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSA_WithoutFiles", "RSA_WithoutFiles\RSA_WithoutFiles.csproj", "{83E087AB-EFB1-4696-B8B7-F37C44A8368B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AES_WithoutFiles", "AES_WithoutFiles\AES_WithoutFiles.csproj", "{DA216AAB-9E8B-468A-A993-B2C05A6A4D8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{83E087AB-EFB1-4696-B8B7-F37C44A8368B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83E087AB-EFB1-4696-B8B7-F37C44A8368B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83E087AB-EFB1-4696-B8B7-F37C44A8368B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA216AAB-9E8B-468A-A993-B2C05A6A4D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA216AAB-9E8B-468A-A993-B2C05A6A4D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA216AAB-9E8B-468A-A993-B2C05A6A4D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA216AAB-9E8B-468A-A993-B2C05A6A4D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
