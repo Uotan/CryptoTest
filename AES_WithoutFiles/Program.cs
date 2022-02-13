@@ -1,8 +1,18 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
+// KeySizes retrieved from the System.Security.Cryptography.Aes
+// object.
+// Minimum key size bits: 128
+// Maximum key size bits: 256
+// Interval between key size bits: 64
+// aes.blocksize:128
+
 //пароль, еще не пробовал изменять длинну ключа
-string pass = "4elpsGky8'}|;I[*";
+//string pass = "4elpsGky8'}|;I[*4elpsGky8'}|;I[*"; //256bit
+//string pass = "4elpsGky8'}|;I[*11111111";//192bit
+string pass = "4elpsGky8'}|;I[*";//128bit
+
 //переводим в байты
 byte[] key = Encoding.ASCII.GetBytes(pass);
 //строка формата base64, в нее засунем 
@@ -21,6 +31,9 @@ Console.ReadKey();
 void Encrypt()
 {
     Aes aes = Aes.Create();
+
+    aes.KeySize = 128;
+
     aes.Key = key;
     //зашифрованные данные в виде массива байтов
     byte[] cryptedMessageByteArray;
@@ -55,6 +68,8 @@ void Encrypt()
 void Decrypt()
 {
     Aes aes = Aes.Create();
+    aes.KeySize = 128;
+
     aes.Key = key;
     //ковертируем base64 зашифрованные данные обратно в белеберду
     byte[] base64EncodedBytes = Convert.FromBase64String(base64_cryptedData);
