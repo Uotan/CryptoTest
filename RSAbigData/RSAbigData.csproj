@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Users\User\Downloads\RSAUtil-master\XC.RSAUtil\XC.RSAUtil.csproj" />
+    <ProjectReference Include="..\XC.RSAUtil\XC.RSAUtil.csproj" />
   </ItemGroup>
 
 </Project>
