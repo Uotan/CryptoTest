@@ -2,7 +2,7 @@
 using System.Text;
 using XC.RSAUtil;
 
-// thanck you Zhiqiang Li
+// thank you Zhiqiang Li
 //https://github.com/stulzq/RSAUtil
 
 
