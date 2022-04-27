@@ -11,27 +11,16 @@ var keyList = RsaKeyGenerator.Pkcs1Key(2048, false);
 var privateKey = keyList[0];
 var publicKey = keyList[1];
 
-var privateKeyBytes = Encoding.Unicode.GetBytes(RsaKeyConvert.PublicKeyPemToXml(publicKey)); 
-var publicKeyBytes = Encoding.Unicode.GetBytes(RsaKeyConvert.PublicKeyPemToXml(publicKey));
-
-string base64private = Convert.ToBase64String(privateKeyBytes);
-string base64public = Convert.ToBase64String(publicKeyBytes);
-
-Console.WriteLine("\npublic key base64:"+ base64public);
-Console.WriteLine("\nprivate key base64:"+ base64private);
 
 
-Console.WriteLine("\npublic key pkcs1 -> xml:");
-Console.WriteLine(RsaKeyConvert.PublicKeyPemToXml(publicKey));
+//Console.WriteLine("\npublic key pkcs1 -> xml:");
+//Console.WriteLine(RsaKeyConvert.PublicKeyPemToXml(publicKey));
 
-Console.WriteLine("\nprivate key -> xml:");
-Console.WriteLine(RsaKeyConvert.PrivateKeyPkcs1ToXml(privateKey));
+//Console.WriteLine("\nprivate key -> xml:");
+//Console.WriteLine(RsaKeyConvert.PrivateKeyPkcs1ToXml(privateKey));
 
-
-
-//var privateKey1 = Convert.FromBase64String(base64private);
-//var publicKey1 = Convert.FromBase64String(_publickeyBase64);
-
+Console.WriteLine("\npublic key:" + privateKey);
+Console.WriteLine("\nprivate key:" + publicKey);
 
 
 
